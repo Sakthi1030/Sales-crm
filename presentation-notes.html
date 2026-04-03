@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus CRM Presentation Notes</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --panel: #161b27;
+      --text: #f0f2f8;
+      --muted: #9aa3b8;
+      --accent: #4f7ef8;
+      --border: rgba(255,255,255,0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #0f1117 0%, #121827 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-top: 30px;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 18px;
+      color: #dbe6ff;
+    }
+
+    p, li {
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-top: 18px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    code {
+      background: rgba(79,126,248,0.12);
+      color: #cfe0ff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: Consolas, monospace;
+    }
+
+    .highlight {
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Nexus CRM Presentation Notes</h1>
+      <p class="muted">
+        Brief explanation of the project, file structure, data source, and how to present it clearly.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>1. Project Overview</h2>
+      <p>
+        Nexus CRM is a full-stack CRM application built using React, Node.js, Express, and PostgreSQL.
+        It helps manage sales work such as leads, customers, deals, tasks, reports, and team access.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>2. Main Project Parts</h2>
+      <h3>Frontend</h3>
+      <p><code>frontend/</code> contains the user interface shown in the browser.</p>
+
+      <h3>Backend</h3>
+      <p><code>backend/</code> contains the API, route handling, authentication, and business logic.</p>
+
+      <h3>Database</h3>
+      <p><code>database/</code> contains the SQL schema and seed script for sample data.</p>
+    </div>
+
+    <div class="card">
+      <h2>3. Important Files and Their Functions</h2>
+      <ul>
+        <li><code>backend/server.js</code> starts the Express server and loads all API routes.</li>
+        <li><code>backend/config/db.js</code> connects the backend to PostgreSQL.</li>
+        <li><code>backend/middleware/auth.js</code> handles JWT auth and admin protection.</li>
+        <li><code>backend/routes/*.js</code> handles features like auth, leads, customers, deals, tasks, reports, and team.</li>
+        <li><code>database/schema.sql</code> defines tables, keys, indexes, and constraints.</li>
+        <li><code>database/seed.js</code> inserts sample demo records into the database.</li>
+        <li><code>frontend/src/App.jsx</code> defines app routing, protected screens, and layout.</li>
+        <li><code>frontend/src/context/AuthContext.jsx</code> manages login state and token handling.</li>
+        <li><code>frontend/src/utils/api.js</code> keeps frontend API calls in one place.</li>
+        <li><code>frontend/src/pages/*.jsx</code> contains screens like Dashboard, Leads, Customers, Pipeline, Tasks, Reports, and Team.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>4. Where the Data Comes From</h2>
+      <p>
+        The current project data comes from <code>database/seed.js</code>.
+        That script generates demo users, leads, customers, deals, interactions, and tasks.
+      </p>
+      <div class="highlight">
+        <p>
+          The data is not from a real company and not from an external live API.
+          It is seeded sample data stored in PostgreSQL.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>5. Is the Data Real-Time or Static?</h2>
+      <p>
+        The best answer is: <strong>it is dynamic and database-driven, but not external real-time data.</strong>
+      </p>
+      <ul>
+        <li>It is not just hardcoded screen data.</li>
+        <li>It is stored in PostgreSQL, so changes are saved.</li>
+        <li>It updates when the user creates or edits records.</li>
+        <li>It is not live streaming data from the outside world.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>6. Authentication and Roles</h2>
+      <p>The app uses JWT authentication with two main roles:</p>
+      <ul>
+        <li><strong>Admin</strong> with full access</li>
+        <li><strong>Sales Rep</strong> with more limited access</li>
+      </ul>
+      <p>Role handling exists in both frontend routing and backend middleware.</p>
+    </div>
+
+    <div class="card">
+      <h2>7. Simple Architecture Flow</h2>
+      <p>
+        Browser UI → Express API → PostgreSQL Database → Express API → Browser UI
+      </p>
+      <p>
+        The frontend never talks directly to PostgreSQL. All requests go through the backend.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>8. Best Presentation Summary</h2>
+      <p>
+        Nexus CRM is a full-stack CRM system built with React, Node.js, Express, and PostgreSQL.
+        The frontend handles the interface, the backend handles API logic and authentication,
+        and PostgreSQL stores the CRM data. The project uses seeded demo data, so it is interactive
+        and persistent, but not external real-time data.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
