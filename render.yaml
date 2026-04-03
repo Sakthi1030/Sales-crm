@@ -5,7 +5,6 @@ services:
     plan: free
     region: singapore
     buildCommand: npm run render-build
-    preDeployCommand: npm --prefix backend run seed
     startCommand: npm run render-start
     healthCheckPath: /api/health
     envVars:
