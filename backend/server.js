@@ -8,7 +8,8 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const { testConnection } = require('./config/db');
+const { pool, testConnection } = require('./config/db');
+const { seed } = require('../database/seed');
 
 const authRoutes = require('./routes/auth');
 const leadRoutes = require('./routes/leads');
@@ -74,8 +75,30 @@ app.use((err, _req, res, _next) => {
   });
 });
 
+async function ensureSeeded() {
+  const shouldAutoSeed = process.env.AUTO_SEED !== 'false';
+  if (!shouldAutoSeed) return;
+
+  const tableCheck = await pool.query(`SELECT to_regclass('public.users') AS users_table`);
+  const usersTableExists = Boolean(tableCheck.rows[0]?.users_table);
+
+  if (!usersTableExists) {
+    console.log('Users table not found. Running initial seed...');
+    await seed({ closePool: false });
+    return;
+  }
+
+  const countResult = await pool.query('SELECT COUNT(*)::int AS count FROM users');
+  const userCount = countResult.rows[0]?.count || 0;
+  if (userCount === 0) {
+    console.log('Users table is empty. Running initial seed...');
+    await seed({ closePool: false });
+  }
+}
+
 async function start() {
   await testConnection();
+  await ensureSeeded();
   app.listen(PORT, () => {
     console.log(`Nexus CRM API running on http://localhost:${PORT}`);
     console.log(`ENV: ${process.env.NODE_ENV}`);
