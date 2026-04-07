@@ -288,17 +288,3 @@ cd frontend && npm run build
 Deploy `build/` to **Netlify**, **Vercel**, or serve via `serve -s build`.  
 Set `REACT_APP_API_URL` if your API isn't on the same domain.
 
----
-
-## 📝 Interview Talking Points
-
-1. **Authentication** — JWT with role-based middleware; token stored in React context, injected via axios interceptor
-2. **REST API design** — RESTful conventions, validation with express-validator, consistent error shapes
-3. **Database** — normalized schema, foreign keys with cascade, composite indexes for performance, auto-update triggers
-4. **Frontend architecture** — context for global state, page-level data fetching, reusable primitive components
-5. **UX** — debounced search, optimistic updates on task toggle, toast notifications, loading and empty states
-6. **Scalability** — connection pooling, pagination on all list endpoints, query param filtering pushed to DB
-
----
-
-*Built with ❤️ as a full-year project showcase. Happy coding!*
